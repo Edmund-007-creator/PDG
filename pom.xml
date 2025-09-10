@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 1. 项目基本信息 (保持不变) -->
+    <groupId>dev.tools</groupId>
+    <artifactId>soot-cfg-tool</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- 2. 依赖 (保持不变, SLF4J的配置很棒!) -->
+    <dependencies>
+        <dependency>
+            <groupId>org.soot-oss</groupId>
+            <artifactId>soot</artifactId>
+            <version>4.4.1</version> <!-- 建议使用 4.4.1，比 4.5.0 更稳定一些 -->
+        </dependency>
+        <!-- 静音 Soot 的 SLF4J 日志，这是一个很好的实践 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.12</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- 3. 构建配置 (核心修正区域) -->
+    <build>
+        <plugins>
+            <!-- 编译器插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version> <!-- 更新到较新的稳定版本 -->
+            </plugin>
+
+            <!-- 使用 Shade 插件创建唯一的可执行胖 JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>shade</goal></goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.example.DumpCFDG</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
