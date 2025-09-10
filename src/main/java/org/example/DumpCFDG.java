@@ -51,12 +51,7 @@ import java.util.*;
  *  - --method-prefix：只导出以此前缀开头的方法（为空则全部方法）。
  *  - --out：输出根目录（默认 .），每个方法一个子目录。
  *
- * 输出（每个方法一个目录）：
- *   out/<Class#method@line>/nodes.jsonl
- *   out/<Class#method@line>/cfg_edges.jsonl
- *   out/<Class#method@line>/dfg_edges.jsonl
- *   out/<Class#method@line>/graph.dot
- */
+
 public class DumpCFDG {
 
     // ======== 语句节点模型 ========
