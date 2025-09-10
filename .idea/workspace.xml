@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="979b5e95-6aa7-47c4-81f2-a06496a01e71" name="更改" comment="增加readme" />
+    <list default="true" id="979b5e95-6aa7-47c4-81f2-a06496a01e71" name="更改" comment="更改注释" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,6 +86,14 @@
       <workItem from="1756973788453" duration="2455000" />
       <workItem from="1757493040179" duration="4772000" />
     </task>
+    <task id="LOCAL-00001" summary="更改注释">
+      <created>1757506427840</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1757506427840</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,6 +124,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加readme" />
+    <MESSAGE value="更改注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="更改注释" />
   </component>
 </project>
