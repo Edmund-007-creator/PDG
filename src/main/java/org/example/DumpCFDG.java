@@ -1,6 +1,5 @@
 package org.example;
 
-
 import soot.*;
 import soot.options.Options;
 import soot.toolkits.graph.BriefUnitGraph;
@@ -16,6 +15,8 @@ import soot.util.dot.DotGraph;
 import soot.util.dot.DotGraphEdge;
 import soot.util.dot.DotGraphNode;
 
+
+import java.util.regex.Pattern;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -51,7 +52,12 @@ import java.util.*;
  *  - --method-prefix：只导出以此前缀开头的方法（为空则全部方法）。
  *  - --out：输出根目录（默认 .），每个方法一个子目录。
  *
-
+ * 输出（每个方法一个目录）：
+ *   out/<Class#method@line>/nodes.jsonl
+ *   out/<Class#method@line>/cfg_edges.jsonl
+ *   out/<Class#method@line>/dfg_edges.jsonl
+ *   out/<Class#method@line>/graph.dot
+ */
 public class DumpCFDG {
 
     // ======== 语句节点模型 ========
@@ -76,14 +82,9 @@ public class DumpCFDG {
             System.exit(2);
         }
 
-
-
-
-
-
         // 解析 process_dir（从 cp 中挑出存在的目录）
         List<String> processDirs = new ArrayList<>();
-        for (String seg : cp.split(File.pathSeparator))  {
+        for (String seg : cp.split(Pattern.quote(File.pathSeparator))) {
             if (seg == null || seg.trim().isEmpty()) continue;
             Path p = Paths.get(seg);
             if (Files.isDirectory(p)) processDirs.add(seg);
