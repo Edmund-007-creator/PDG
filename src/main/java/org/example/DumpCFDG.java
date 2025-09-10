@@ -107,8 +107,9 @@ public class DumpCFDG {
         SootClass sc = Scene.v().loadClassAndSupport(onlyClass);
         sc.setApplicationClass();
 
-        // 把源码（若提供）预加载
+        // 把源码（若提供）预加载并拆分为行
         final String srcText = srcFile.isEmpty() ? null : safeReadAll(srcFile);
+        final String[] srcLines = srcText == null ? null : srcText.replace("\r", "").split("\n", -1);
 
         // ======== Transformer：每个方法导出一套产物 ========
         PackManager.v().getPack("jtp").add(new Transform("jtp.dumpcfdg", new BodyTransformer() {
@@ -148,7 +149,7 @@ public class DumpCFDG {
                 List<StmtNode> stmtNodes = new ArrayList<>();
                 int sid = 1;
                 for (int[] seg : merged) {
-                    String t = (srcText == null) ? ("L" + seg[0] + ".." + seg[1]) : slice(srcText, seg[0], seg[1]);
+                    String t = (srcLines == null) ? ("L" + seg[0] + ".." + seg[1]) : slice(srcLines, seg[0], seg[1]);
                     stmtNodes.add(new StmtNode(sid++, seg[0], seg[1], t));
                 }
                 int maxLine = merged.get(merged.size() - 1)[1];
@@ -338,9 +339,8 @@ public class DumpCFDG {
         }
     }
 
-    static String slice(String src, int sLine, int eLine) {
-        if (src == null) return "L" + sLine + ".." + eLine;
-        String[] lines = src.replace("\r", "").split("\n", -1);
+    static String slice(String[] lines, int sLine, int eLine) {
+        if (lines == null) return "L" + sLine + ".." + eLine;
         sLine = Math.max(1, sLine);
         eLine = Math.min(eLine, lines.length);
         StringBuilder sb = new StringBuilder();
